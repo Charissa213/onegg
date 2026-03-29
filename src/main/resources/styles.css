@@ -1,0 +1,132 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0f;
+  overflow: hidden;
+  font-family: "Georgia", serif;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1) translateY(-10px);
+  }
+  70% {
+    opacity: 0.8;
+    transform: scale(0.8) translateY(-20px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) translateY(-35px);
+  }
+}
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+  opacity: 0;
+}
+
+.center {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  user-select: none;
+}
+
+.glitter {
+  font-size: clamp(4rem, 16vw, 12rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ff0080, #ff8c00, #ffe600, #00ff9f, #00cfff, #cc00ff, #ff0080, #ff8c00, #ffe600);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 220, 50, 0.7)) drop-shadow(0 0 20px rgba(255, 100, 200, 0.5)) drop-shadow(0 0 40px rgba(100, 200, 255, 0.4));
+}
+
+.sparkles {
+  position: absolute;
+  inset: -60px;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  width: var(--size, 8px);
+  height: var(--size, 8px);
+  opacity: 0;
+  animation: pop var(--dur, 1.5s) ease-in-out infinite var(--delay, 0s);
+}
+.sparkle::before, .sparkle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color, #ffe600);
+  border-radius: 1px;
+}
+.sparkle::before {
+  clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+}
+.sparkle::after {
+  clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+  transform: rotate(45deg) scale(0.5);
+  opacity: 0.6;
+}
+
+.subtitle {
+  margin-top: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.6rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: transparent;
+  background: linear-gradient(90deg, #ffd700, #fff8b0, #ffd700);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+  opacity: 0.85;
+}

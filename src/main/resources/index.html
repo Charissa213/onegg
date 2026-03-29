@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Onegg – Welcome</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Twinkling star background -->
+<div class="stars" id="stars"></div>
+
+<div class="center">
+    <!-- Sparkle particles around the text -->
+    <div class="sparkles" id="sparkles"></div>
+
+    <div class="glitter">Welcome</div>
+    <div class="subtitle">to onegg test</div>
+</div>
+
+<script>
+    /* ── Generate twinkling stars ── */
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 160; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        const size = Math.random() * 2.5 + 0.5;
+        s.style.cssText = `
+            width:${size}px; height:${size}px;
+            top:${Math.random()*100}%;
+            left:${Math.random()*100}%;
+            --dur:${(Math.random()*4+2).toFixed(2)}s;
+            --delay:-${(Math.random()*6).toFixed(2)}s;
+        `;
+        starsContainer.appendChild(s);
+    }
+
+    /* ── Generate sparkle particles ── */
+    const sparkleContainer = document.getElementById('sparkles');
+    const colors = ['#ffe600','#ff80c0','#80dfff','#c0ff80','#ffb347','#ee82ee'];
+    for (let i = 0; i < 28; i++) {
+        const sp = document.createElement('div');
+        sp.className = 'sparkle';
+        const size = Math.random() * 14 + 6;
+        sp.style.cssText = `
+            --size:${size}px;
+            --color:${colors[Math.floor(Math.random()*colors.length)]};
+            --dur:${(Math.random()*1.8+0.8).toFixed(2)}s;
+            --delay:-${(Math.random()*3).toFixed(2)}s;
+            top:${Math.random()*100}%;
+            left:${Math.random()*100}%;
+        `;
+        sparkleContainer.appendChild(sp);
+    }
+</script>
+</body>
+</html>
+
