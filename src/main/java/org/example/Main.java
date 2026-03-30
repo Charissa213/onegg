@@ -47,9 +47,28 @@ public class Main {
         }
 
         private String getContentType(String path) {
-            if (path.endsWith(".html")) return "text/html; charset=UTF-8";
-            if (path.endsWith(".css"))  return "text/css; charset=UTF-8";
-            if (path.endsWith(".js"))   return "application/javascript";
+            String p = path.toLowerCase();
+            if (p.endsWith(".html"))        return "text/html; charset=UTF-8";
+            if (p.endsWith(".css"))         return "text/css; charset=UTF-8";
+            if (p.endsWith(".js"))          return "application/javascript";
+            // Afbeeldingen
+            if (p.endsWith(".png"))         return "image/png";
+            if (p.endsWith(".jpg") ||
+                p.endsWith(".jpeg"))        return "image/jpeg";
+            if (p.endsWith(".gif"))         return "image/gif";
+            if (p.endsWith(".svg"))         return "image/svg+xml";
+            if (p.endsWith(".webp"))        return "image/webp";
+            if (p.endsWith(".ico"))         return "image/x-icon";
+            // Video's
+            if (p.endsWith(".mp4"))         return "video/mp4";
+            if (p.endsWith(".webm"))        return "video/webm";
+            if (p.endsWith(".ogg"))         return "video/ogg";
+            if (p.endsWith(".mov"))         return "video/quicktime";
+            // Fonts
+            if (p.endsWith(".woff"))        return "font/woff";
+            if (p.endsWith(".woff2"))       return "font/woff2";
+            if (p.endsWith(".ttf"))         return "font/ttf";
+            if (p.endsWith(".otf"))         return "font/otf";
             return "application/octet-stream";
         }
     }

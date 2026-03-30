@@ -10,9 +10,10 @@ sleep 1
 
 echo "🎨 SCSS eenmalig compileren..."
 sass $RESOURCES/styles.scss $RESOURCES/styles.css --no-source-map
+sass $RESOURCES/placeholder.scss $RESOURCES/placeholder.css --no-source-map
 
 echo "👀 SCSS watcher starten (achtergrond)..."
-sass --watch $RESOURCES/styles.scss:$RESOURCES/styles.css --no-source-map &
+sass --watch $RESOURCES/styles.scss:$RESOURCES/styles.css --watch $RESOURCES/placeholder.scss:$RESOURCES/placeholder.css --no-source-map &
 SASS_PID=$!
 
 echo "🔨 Java compileren..."
@@ -26,4 +27,5 @@ echo "   ☕  Java wijzigingen    → herstart run.sh"
 echo ""
 
 trap "kill $SASS_PID 2>/dev/null" EXIT
-$JAVA_BIN -cp "target/classes:$RESOURCES" org.example.Main
+find target/classes -maxdepth 1 -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \) -delete 2>/dev/null
+$JAVA_BIN -cp "$RESOURCES:target/classes" org.example.Main
