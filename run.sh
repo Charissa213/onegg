@@ -17,7 +17,13 @@ sass --watch $RESOURCES/styles.scss:$RESOURCES/styles.css --watch $RESOURCES/pla
 SASS_PID=$!
 
 echo "🔨 Java compileren..."
+mkdir -p target/classes
 $JAVAC -d target/classes src/main/java/org/example/Main.java
+if [ $? -ne 0 ]; then
+  echo "❌ Compilatie mislukt — server niet gestart."
+  kill $SASS_PID 2>/dev/null
+  exit 1
+fi
 
 echo ""
 echo "🚀 Server draait op http://localhost:8090"
@@ -26,6 +32,6 @@ echo "   🎨  SCSS wijzigingen    → automatisch gecompileerd + browser refres
 echo "   ☕  Java wijzigingen    → herstart run.sh"
 echo ""
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 trap "kill $SASS_PID 2>/dev/null" EXIT
-find target/classes -maxdepth 1 -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \) -delete 2>/dev/null
-$JAVA_BIN -cp "$RESOURCES:target/classes" org.example.Main
+$JAVA_BIN -cp "$SCRIPT_DIR/$RESOURCES:$SCRIPT_DIR/target/classes" org.example.Main

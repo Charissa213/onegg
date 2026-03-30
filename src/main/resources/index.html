@@ -11,7 +11,7 @@
 
 <!-- Top-right: logo -->
 <div class="logo-corner">
-    <img src="assets/logos/onegg_wit.png" alt="Onegg" />
+    <a href="index.html"><img src="assets/logos/onegg_wit.png" alt="Onegg" /></a>
 </div>
 
 <!-- Main layout -->
@@ -19,7 +19,6 @@
 
     <!-- LEFT: Verticale naam + social icons -->
     <div class="col-left">
-        <img class="brand-logo" src="assets/logos/onegg_wit.png" alt="Onegg" />
 
         <ul class="social-icons" aria-label="Social media">
             <li><a href="https://www.instagram.com/oneggband/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -43,9 +42,20 @@
     <!-- CENTER: TV afbeelding -->
     <div class="col-center">
         <div class="tv-wrapper">
-            <video class="tv-screen" autoplay muted loop playsinline>
+            <video class="tv-screen" id="tvVideo" autoplay muted loop playsinline>
                 <source src="assets/videos/live_video_goede.MP4" type="video/mp4" />
             </video>
+            <!-- Black screen overlay (shown when TV is off) -->
+            <div class="tv-off-overlay" id="tvOffOverlay"></div>
+            <!-- On/Off buttons -->
+            <div class="tv-buttons">
+                <button class="tv-btn tv-btn--off" id="tvOff" title="Turn off">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A6.92 6.92 0 0119 12c0 3.87-3.13 7-7 7A7 7 0 015 12c0-2.28 1.09-4.3 2.58-5.42L6.17 5.17A8.932 8.932 0 003 12a9 9 0 0018 0c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+                </button>
+                <button class="tv-btn tv-btn--on" id="tvOn" title="Turn on">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A6.92 6.92 0 0119 12c0 3.87-3.13 7-7 7A7 7 0 015 12c0-2.28 1.09-4.3 2.58-5.42L6.17 5.17A8.932 8.932 0 003 12a9 9 0 0018 0c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+                </button>
+            </div>
             <img class="center-tv" src="assets/images/oldschooltv.png" alt="Old school TV" />
         </div>
     </div>
@@ -55,20 +65,18 @@
         <nav class="main-nav" aria-label="Navigatie">
             <div class="main-nav__item"><a href="tour.html">Tour</a></div>
             <div class="main-nav__item"><a href="music.html">Music</a></div>
-            <div class="main-nav__item"><a href="store.html">Store</a></div>
+            <div class="main-nav__item"><a href="media.html">Media</a></div>
         </nav>
     </div>
 
 </div>
 
 
-<!-- Spacer zodat footer scrollbaar is onder fixed layout -->
-<div class="page-spacer"></div>
 
 <!-- Footer -->
 <footer class="site-footer">
     <div class="footer-inner">
-        <img class="footer-logo" src="assets/logos/onegg_wit.png" alt="Onegg" />
+        <a href="index.html"><img class="footer-logo" src="assets/logos/onegg_wit.png" alt="Onegg" /></a>
         <p class="footer-tagline">Support and follow</p>
         <ul class="footer-social" aria-label="Social media">
             <li><a href="https://www.instagram.com/oneggband/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -84,6 +92,21 @@
 
 <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    const video   = document.getElementById('tvVideo');
+    const overlay = document.getElementById('tvOffOverlay');
+    const btnOff  = document.getElementById('tvOff');
+    const btnOn   = document.getElementById('tvOn');
+
+    btnOff.addEventListener('click', () => {
+        overlay.classList.add('tv-off');
+        video.pause();
+    });
+
+    btnOn.addEventListener('click', () => {
+        overlay.classList.remove('tv-off');
+        video.play();
+    });
 </script>
 
 </body>
