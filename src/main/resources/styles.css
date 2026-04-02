@@ -282,6 +282,39 @@ a:hover {
   margin-top: 1.2rem;
 }
 
+.music-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.music-instruments {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(1rem, 2vw, 2rem);
+  align-items: center;
+  justify-content: center;
+}
+
+.instrument-img {
+  width: clamp(70px, 10vw, 130px);
+  height: auto;
+  filter: drop-shadow(0 0 30px rgba(224, 48, 110, 0.45)) drop-shadow(0 0 80px rgba(122, 21, 128, 0.3));
+}
+
+.soundcloud-wrap {
+  width: clamp(280px, 48vw, 620px);
+}
+.soundcloud-wrap iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 8px;
+}
+
 .cta {
   position: fixed;
   bottom: 2rem;
@@ -401,6 +434,24 @@ a:hover {
     justify-content: center;
     padding: 0 1rem;
     overflow: hidden;
+  }
+  .page-hero {
+    display: none;
+  }
+  .music-content {
+    gap: 0.8rem;
+    padding: 0 0.5rem;
+    width: 100%;
+  }
+  .soundcloud-wrap {
+    width: 100%;
+    max-width: 100%;
+  }
+  .soundcloud-wrap iframe {
+    height: 220px;
+  }
+  .instrument-img {
+    width: clamp(55px, 18vw, 90px);
   }
   .tv-wrapper {
     width: min(88vw, 480px);
