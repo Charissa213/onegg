@@ -7,8 +7,8 @@
     // Stap 2: API key aanmaken op console.cloud.google.com
     //         (beperk tot "Google Calendar API" + jouw domein)
     // Stap 3: Calendar ID vinden in Instellingen → Agenda integreren
-    const CALENDAR_ID = 'JOUW_CALENDAR_ID@group.calendar.google.com';
-    const API_KEY     = 'JOUW_API_KEY';
+    const CALENDAR_ID = 'oneggcalender@hotmail.com';
+    const API_KEY     = 'AIzaSyBxeka1bXYa6ATdNYaj-qOzfEDeR_Ibh4g';
     // ─────────────────────────────────────────────────────
 
     const list   = document.getElementById('tourList');
@@ -99,4 +99,3 @@
     loadDates();
 
 }());
-

@@ -1,15 +1,11 @@
 // ── Korg Minilogue – Web Synthesizer ─────────────────────────────────────────
-// Web Audio API: sawtooth oscillatoren + lowpass filter + ADSR envelope
-
 (function () {
     'use strict';
 
     let audioCtx = null;
 
     function getAudioCtx() {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
         return audioCtx;
     }
@@ -22,7 +18,7 @@
     for (let octave = 1; octave <= 4; octave++) {
         for (let semitone = 0; semitone < 12; semitone++) {
             if (octave === 4 && semitone > 0) break;
-            const midi = (octave + 1) * 12 + semitone; // C1 = MIDI 24
+            const midi = (octave + 1) * 12 + semitone;
             const freq = 440 * Math.pow(2, (midi - 69) / 12);
             NOTES.push({ name: NOTE_NAMES[semitone] + octave, freq, isBlack: IS_BLACK[semitone] });
         }
@@ -33,7 +29,6 @@
         const ctx = getAudioCtx();
         const now = ctx.currentTime;
 
-        // Twee oscillatoren met lichte detune → rijker analoog geluid
         const osc1   = ctx.createOscillator();
         const osc2   = ctx.createOscillator();
         const filter = ctx.createBiquadFilter();
@@ -42,47 +37,25 @@
         osc1.type = 'sawtooth';
         osc2.type = 'sawtooth';
         osc1.frequency.value = frequency;
-        osc2.frequency.value = frequency * 1.006; // detune
+        osc2.frequency.value = frequency * 1.006;
 
-        // Lowpass filter (analoge karakter)
         filter.type            = 'lowpass';
         filter.frequency.value = Math.min(frequency * 5, 4000);
         filter.Q.value         = 4;
 
-        // ADSR
         gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.35, now + 0.008);       // Attack
-        gain.gain.exponentialRampToValueAtTime(0.18, now + 0.15);   // Decay → Sustain
+        gain.gain.linearRampToValueAtTime(0.35, now + 0.008);
+        gain.gain.exponentialRampToValueAtTime(0.18, now + 0.15);
         gain.gain.setValueAtTime(0.18, now + 0.15);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);  // Release
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);
 
-        osc1.connect(filter);
-        osc2.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc1.start(now);
-        osc2.start(now);
-        osc1.stop(now + 1.5);
-        osc2.stop(now + 1.5);
+        osc1.connect(filter); osc2.connect(filter);
+        filter.connect(gain); gain.connect(ctx.destination);
+        osc1.start(now); osc2.start(now);
+        osc1.stop(now + 1.5); osc2.stop(now + 1.5);
     }
 
-    // ── Toetsenbord mapping ───────────────────────────────────────────────────
-    // Minilogue afbeelding 1000×1330px:
-    //   - Toetsen starten op ~y = 82% van de afbeeldinghoogte
-    //   - Toetsen lopen van x ≈ 3% tot x ≈ 97%
-    const KEYS_Y_START = 0.82;
-    const KEYS_X_START = 0.03;
-    const KEYS_X_END   = 0.97;
-
-    function xToNote(relX) {
-        const clamped = Math.max(0, Math.min(1,
-            (relX - KEYS_X_START) / (KEYS_X_END - KEYS_X_START)
-        ));
-        return NOTES[Math.min(Math.floor(clamped * NOTES.length), NOTES.length - 1)];
-    }
-
-    // ── Noot-indicator (zweeft bij klik) ─────────────────────────────────────
+    // ── Noot-indicator ────────────────────────────────────────────────────────
     let indicator = null;
 
     function showIndicator(noteName, clientX, clientY) {
@@ -95,36 +68,59 @@
         indicator.style.left = clientX + 'px';
         indicator.style.top  = (clientY - 50) + 'px';
         indicator.classList.remove('visible');
-        void indicator.offsetWidth; // force reflow
+        void indicator.offsetWidth;
         indicator.classList.add('visible');
     }
 
-    // ── Initialisatie ─────────────────────────────────────────────────────────
-    document.addEventListener('DOMContentLoaded', function () {
-        const img = document.querySelector('.instrument-detail__img--minilogue');
-        if (!img) return;
+    // ── Piano keyboard ────────────────────────────────────────────────────────
+    function createKeyboard() {
+        const keyboard = document.createElement('div');
+        keyboard.className = 'minilogue-keyboard';
 
-        img.style.cursor = 'crosshair';
-
-        img.addEventListener('click', function (e) {
-            // getBoundingClientRect geeft de volledige img-positie terug,
-            // ook het gedeelte dat boven de viewport is geclipped (negatieve top).
-            const rect = img.getBoundingClientRect();
-            const relX = (e.clientX - rect.left) / rect.width;
-            const relY = (e.clientY - rect.top)  / rect.height;
-
-            // Buiten het toetsenbordgebied? Negeer.
-            if (relY < KEYS_Y_START) return;
-
-            const note = xToNote(relX);
-            playNote(note.freq);
-            showIndicator(note.name, e.clientX, e.clientY);
-
-            // Visuele flash op de afbeelding
-            img.classList.add('key-pressed');
-            setTimeout(() => img.classList.remove('key-pressed'), 100);
+        // Bereken posities (in witte-toets-eenheden)
+        let whiteCount = 0;
+        const positioned = NOTES.map(note => {
+            if (note.isBlack) {
+                return { ...note, leftInWhites: whiteCount - 0.35 };
+            } else {
+                const pos = { ...note, leftInWhites: whiteCount };
+                whiteCount++;
+                return pos;
+            }
         });
-    });
+
+        const totalWhites = whiteCount; // 22
+
+        function makeKey(note) {
+            const key = document.createElement('div');
+            key.className = 'mkey ' + (note.isBlack ? 'mkey--black' : 'mkey--white');
+            key.style.left  = (note.leftInWhites / totalWhites * 100) + '%';
+            key.style.width = ((note.isBlack ? 0.58 : 1) / totalWhites * 100) + '%';
+
+            const activate = (e) => {
+                playNote(note.freq);
+                showIndicator(note.name, e.clientX || e.touches?.[0]?.clientX, (e.clientY || e.touches?.[0]?.clientY) - 60);
+                key.classList.add('mkey--active');
+            };
+            const deactivate = () => key.classList.remove('mkey--active');
+
+            key.addEventListener('mousedown', activate);
+            key.addEventListener('mouseup', deactivate);
+            key.addEventListener('mouseleave', deactivate);
+            key.addEventListener('touchstart', (e) => { e.preventDefault(); activate(e); }, { passive: false });
+            key.addEventListener('touchend', deactivate);
+
+            return key;
+        }
+
+        // Witte toetsen eerst (achtergrond), dan zwarte (voorgrond)
+        positioned.filter(n => !n.isBlack).forEach(n => keyboard.appendChild(makeKey(n)));
+        positioned.filter(n =>  n.isBlack).forEach(n => keyboard.appendChild(makeKey(n)));
+
+        document.body.appendChild(keyboard);
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', createKeyboard);
 
 })();
-

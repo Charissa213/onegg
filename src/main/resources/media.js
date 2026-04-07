@@ -13,7 +13,7 @@
     }
 
     // Methode 1: Behold dispatcht 'beholdLoaded' op de widget div
-    const widgetEl = wrap.querySelector('[id^="behold-widget-"]');
+    const widgetEl = wrap.querySelector('[data-behold-id]');
     if (widgetEl) {
         widgetEl.addEventListener('beholdLoaded', showFeed, { once: true });
     }

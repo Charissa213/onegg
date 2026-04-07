@@ -1,0 +1,212 @@
+.media-sidebar {
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem 1.5rem;
+  z-index: 10;
+}
+.media-sidebar--left {
+  left: 0;
+}
+.media-sidebar--right {
+  right: 0;
+}
+
+.media-main {
+  padding: 2rem clamp(80px, 9vw, 130px) 6rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.media-header {
+  text-align: center;
+  padding: 2.5rem 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.media-title {
+  font-family: "Arial Black", "Arial Bold", Impact, sans-serif;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 900;
+  color: #e0306e;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: 0 0 30px rgba(224, 48, 110, 0.35), 0 0 80px rgba(122, 21, 128, 0.2);
+}
+
+.media-insta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1.5px solid rgba(224, 48, 110, 0.4);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  background: rgba(224, 48, 110, 0.07);
+  transition: background 0.2s ease, border-color 0.2s ease;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  width: fit-content;
+}
+.media-insta-badge svg {
+  width: 18px;
+  height: 18px;
+  fill: #e0306e;
+  flex-shrink: 0;
+}
+.media-insta-badge a {
+  font-family: "Arial", Helvetica, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: rgba(224, 48, 110, 0.75);
+  font-weight: 600;
+}
+.media-insta-badge:hover {
+  background: rgba(224, 48, 110, 0.14);
+  border-color: #e0306e;
+}
+.media-insta-badge:hover a {
+  color: #e0306e;
+  opacity: 1;
+}
+
+.media-feed-section {
+  padding-bottom: 4rem;
+}
+
+.media-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 5rem 0;
+  transition: opacity 0.4s ease;
+}
+.media-loader.is-hidden {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.media-loader__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e0306e;
+  animation: dotPulse 1.2s ease-in-out infinite both;
+}
+.media-loader__dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.media-loader__dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    transform: scale(0.5);
+    opacity: 0.25;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.media-feed-wrap {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.media-feed-wrap.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.media-feed-wrap > div {
+  background: transparent !important;
+}
+
+.layout--mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .media-sidebar--left {
+    display: flex;
+    top: 0;
+    bottom: auto;
+    padding: 0.9rem 1.2rem;
+    align-items: center;
+  }
+  .media-sidebar--left .social-icons {
+    flex-direction: row;
+    gap: 1.1rem;
+  }
+  .media-sidebar--left .social-icons a {
+    width: 20px;
+    height: 20px;
+  }
+  .media-sidebar--left .social-icons svg {
+    width: 18px;
+    height: 18px;
+  }
+  .media-sidebar--right {
+    display: flex;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.8rem 1.2rem 1.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .media-sidebar--right .main-nav {
+    flex-direction: row;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .media-sidebar--right .main-nav__item {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 0.2rem;
+  }
+  .media-sidebar--right .main-nav__item::before {
+    height: 1.6rem;
+    margin-right: 0.5rem;
+  }
+  .media-sidebar--right .main-nav__item a {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: clamp(0.6rem, 2.8vw, 0.8rem);
+  }
+  .media-main {
+    padding: 4rem 1rem 5.5rem;
+  }
+  .media-header {
+    padding: 1.5rem 0 1rem;
+  }
+  .media-header .media-title {
+    display: none;
+  }
+  .media-insta-badge {
+    padding: 0.35rem 0.9rem;
+  }
+  .media-insta-badge svg {
+    width: 15px;
+    height: 15px;
+  }
+  .media-insta-badge a {
+    font-size: 0.75rem;
+  }
+  .media-insta-badge {
+    width: 9rem;
+  }
+}

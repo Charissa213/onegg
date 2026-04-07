@@ -151,7 +151,7 @@ $font-ui:      'Arial', Helvetica, sans-serif;
     .tour-content {
         max-height: calc(100vh - 11rem);
         width: 100%;
-        padding: 0 0.2rem;
+        padding: 3rem 0.2rem 0;  // top: ruimte voor page-title-bar
     }
 
     // Op mobiel: stapel de kolommen
@@ -167,4 +167,3 @@ $font-ui:      'Arial', Helvetica, sans-serif;
         margin-top: 0.25rem;
     }
 }
-

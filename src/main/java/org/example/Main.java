@@ -41,9 +41,9 @@ public class Main {
             byte[] bytes = is.readAllBytes();
             long totalLength = bytes.length;
 
-            // Cache-Control: HTML kort, alles anders 1 uur
-            if (contentType.startsWith("text/html")) {
-                exchange.getResponseHeaders().set("Cache-Control", "no-cache");
+            // Cache-Control: HTML en CSS/JS nooit cachen (dev), rest 1 uur
+            if (contentType.startsWith("text/html") || contentType.startsWith("text/css") || contentType.startsWith("application/javascript")) {
+                exchange.getResponseHeaders().set("Cache-Control", "no-cache, no-store, must-revalidate");
             } else {
                 exchange.getResponseHeaders().set("Cache-Control", "public, max-age=3600");
             }

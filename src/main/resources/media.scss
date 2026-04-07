@@ -20,7 +20,7 @@ $font-ui:      'Arial', Helvetica, sans-serif;
 
 // ── Scrollable main content ───────────────────────────────
 .media-main {
-    padding: 4rem clamp(80px, 9vw, 130px) 6rem;
+    padding: 2rem clamp(80px, 9vw, 130px) 6rem;
     max-width: 1400px;
     margin: 0 auto;
     min-height: 100vh;
@@ -59,6 +59,9 @@ $font-ui:      'Arial', Helvetica, sans-serif;
     padding: 0.45rem 1.1rem;
     background: rgba($brand, 0.07);
     transition: background 0.2s ease, border-color 0.2s ease;
+    margin: 0 auto 1.5rem;  // gecentreerd, ruimte onder
+    display: flex;
+    width: fit-content;
 
     svg {
         width: 18px;
@@ -149,34 +152,92 @@ $font-ui:      'Arial', Helvetica, sans-serif;
     }
 }
 
+// ── layout--mobile-only altijd verbergen ──────────────────
+// media-sidebar elements regelen de navigatie op zowel desktop als mobiel
+.layout--mobile-only {
+    display: none !important;
+}
+
 // ── Mobile (≤ 768px) ──────────────────────────────────────
 @media (max-width: 768px) {
-    // Sidebars verbergen — mobiel layout via het .layout blok in styles.css
-    .media-sidebar {
-        display: none;
-    }
-
-    // Voeg het .layout / .col-left / .col-right blok toe voor mobiel
-    .media-mobile-layout {
+    // Social icons: fixed bovenaan links (zelfde als andere pagina's)
+    .media-sidebar--left {
         display: flex;
-        flex-direction: column;
-        height: auto;
+        top: 0;
+        bottom: auto;
+        padding: 0.9rem 1.2rem;
+        align-items: center;
     }
 
+    .media-sidebar--left .social-icons {
+        flex-direction: row;
+        gap: 1.1rem;
+    }
+
+    .media-sidebar--left .social-icons a {
+        width: 20px;
+        height: 20px;
+    }
+
+    .media-sidebar--left .social-icons svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    // Nav: fixed onderaan gecentreerd
+    .media-sidebar--right {
+        display: flex;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.8rem 1.2rem 1.5rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .media-sidebar--right .main-nav {
+        flex-direction: row;
+        gap: 1.2rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .media-sidebar--right .main-nav__item {
+        flex-direction: row;
+        align-items: center;
+        padding: 0 0.2rem;
+    }
+
+    .media-sidebar--right .main-nav__item::before {
+        height: 1.6rem;
+        margin-right: 0.5rem;
+    }
+
+    .media-sidebar--right .main-nav__item a {
+        writing-mode: horizontal-tb;
+        transform: none;
+        font-size: clamp(0.6rem, 2.8vw, 0.8rem);
+    }
+
+    // Main content: padding boven voor social icons, onder voor nav
     .media-main {
-        padding: 4.5rem 1rem 3rem;
+        padding: 4rem 1rem 5.5rem;
     }
 
     .media-header {
-        padding: 1.5rem 0 1.5rem;
+        padding: 1.5rem 0 1rem;
     }
 
-    .media-title {
-        font-size: clamp(2.5rem, 14vw, 4rem);
+    .media-header .media-title {
+        display: none;
     }
 
-    .media-insta-badge a {
-        font-size: 0.78rem;
+    .media-insta-badge {
+        padding: 0.35rem 0.9rem;
+        svg { width: 15px; height: 15px; }
+        a { font-size: 0.75rem; }
+        width: 9rem;
     }
 }
 
