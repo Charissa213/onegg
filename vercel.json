@@ -1,5 +1,7 @@
 {
   "outputDirectory": "src/main/resources",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/assets/(.*)",
