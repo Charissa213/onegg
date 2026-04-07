@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Onegg – Tour</title>
-    <meta name="description" content="Onegg – Tour dates" />
-    <meta property="og:title" content="Onegg – Tour" />
-    <meta property="og:description" content="Onegg – Tour dates" />
+    <title>Onegg – Tour Dates</title>
+    <meta name="description" content="Bekijk alle aankomende Onegg optredens en tour dates. Kom Onegg live zien op het podium." />
+    <link rel="canonical" href="https://onegg.vercel.app/tour.html" />
+    <meta property="og:title" content="Onegg – Tour Dates" />
+    <meta property="og:description" content="Bekijk alle aankomende Onegg optredens en tour dates. Kom Onegg live zien op het podium." />
     <meta property="og:image" content="https://onegg.vercel.app/assets/logos/onegg_black.png" />
     <meta property="og:url" content="https://onegg.vercel.app/tour.html" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Onegg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Onegg – Tour Dates" />
+    <meta name="twitter:description" content="Bekijk alle aankomende Onegg optredens en tour dates." />
+    <meta name="twitter:image" content="https://onegg.vercel.app/assets/logos/onegg_black.png" />
     <link rel="icon" type="image/png" href="assets/logos/onegg_wit.png" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="tour.css" />
 </head>
 <body>
 
@@ -20,6 +27,10 @@
 </div>
 
 <div class="layout">
+
+    <div class="page-title-bar">
+        <h1 class="page-title">Tour</h1>
+    </div>
 
     <div class="col-left">
         <ul class="social-icons" aria-label="Social media">
@@ -42,9 +53,21 @@
     </div>
 
     <div class="col-center">
-        <div class="page-hero">
+        <div class="tour-content">
             <h1 class="page-title">Tour</h1>
-            <p class="page-subtitle">coming soon</p>
+
+            <!-- Loading animatie -->
+            <div class="tour-loader" id="tourLoader">
+                <div class="tour-loader__dot"></div>
+                <div class="tour-loader__dot"></div>
+                <div class="tour-loader__dot"></div>
+            </div>
+
+            <!-- Gevuld door tour.js -->
+            <div id="tourList"></div>
+
+            <!-- Geen shows gepland -->
+            <p class="tour-empty" id="tourEmpty">Geen shows gepland</p>
         </div>
     </div>
 
@@ -74,6 +97,7 @@
     <p class="footer-copy">© <span id="footer-year"></span> Onegg. All rights reserved</p>
 </footer>
 
+<script src="tour.js"></script>
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

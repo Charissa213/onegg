@@ -4,6 +4,19 @@
   padding: 0;
 }
 
+/* Screen-reader only: visually hidden but readable by Google & assistive tech */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 body {
   background: #0c0818;
   color: #e0306e;
@@ -300,19 +313,29 @@ a:hover {
 }
 
 .instrument-img {
-  width: clamp(70px, 10vw, 130px);
+  width: clamp(55px, 8vw, 105px);
   height: auto;
   filter: drop-shadow(0 0 30px rgba(224, 48, 110, 0.45)) drop-shadow(0 0 80px rgba(122, 21, 128, 0.3));
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .soundcloud-wrap {
   width: clamp(280px, 48vw, 620px);
+  margin-top: -1.5rem;
 }
 .soundcloud-wrap iframe {
   width: 100%;
   height: 300px;
   border: none;
   border-radius: 8px;
+}
+
+.music-content .page-title {
+  margin-top: 3rem;
+}
+
+.page-title-bar {
+  display: none;
 }
 
 .cta {
@@ -417,7 +440,7 @@ a:hover {
     display: block;
   }
   .logo-corner img {
-    width: clamp(32px, 9vw, 50px);
+    width: clamp(55px, 14vw, 80px);
   }
   .social-icons a {
     width: 20px;
@@ -435,8 +458,22 @@ a:hover {
     padding: 0 1rem;
     overflow: hidden;
   }
-  .page-hero {
+  .page-title-bar {
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  .col-center .page-title {
     display: none;
+  }
+  .page-title {
+    font-size: clamp(1.8rem, 10vw, 3rem);
   }
   .music-content {
     gap: 0.8rem;
@@ -452,6 +489,10 @@ a:hover {
   }
   .instrument-img {
     width: clamp(55px, 18vw, 90px);
+  }
+  .music-instruments a {
+    pointer-events: none;
+    cursor: default;
   }
   .tv-wrapper {
     width: min(88vw, 480px);
@@ -499,5 +540,91 @@ a:hover {
     writing-mode: horizontal-tb;
     transform: none;
     font-size: clamp(0.6rem, 2.8vw, 0.8rem);
+  }
+}
+@media (min-width: 769px) {
+  .music-instruments {
+    gap: clamp(3rem, 5vw, 7rem);
+    align-items: center;
+  }
+  .instrument-img {
+    width: clamp(110px, 16vw, 210px);
+    height: auto;
+    max-width: none;
+  }
+  .music-instruments a:hover,
+  .music-instruments a:focus {
+    opacity: 1;
+  }
+  .music-instruments a:hover .instrument-img,
+  .music-instruments a:focus .instrument-img {
+    transform: scale(1.22) translateY(-6px);
+    filter: drop-shadow(0 0 50px rgba(224, 48, 110, 0.75)) drop-shadow(0 0 120px rgba(122, 21, 128, 0.55));
+  }
+  .music-instruments a:hover .instrument-img--808,
+  .music-instruments a:focus .instrument-img--808 {
+    transform: scale(1.22) translateY(-6px) rotate(-20deg);
+  }
+}
+.back-btn {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  background: rgba(224, 48, 110, 0.12);
+  border: 1.5px solid #e0306e;
+  border-radius: 6px;
+  padding: 0.55rem 1.1rem;
+  font-family: "Arial Black", "Arial Bold", Impact, sans-serif;
+  font-size: clamp(0.6rem, 0.85vw, 0.8rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: background 0.2s ease;
+}
+.back-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+.back-btn:hover {
+  background: rgba(224, 48, 110, 0.3);
+  opacity: 1;
+}
+
+.instrument-detail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 6rem 2rem 4rem;
+}
+
+.instrument-detail__img {
+  max-width: min(90vw, 1300px);
+  max-height: 82vh;
+  height: auto;
+  width: auto;
+  filter: drop-shadow(0 0 40px rgba(224, 48, 110, 0.55)) drop-shadow(0 0 100px rgba(122, 21, 128, 0.35));
+}
+
+.instrument-detail__img--wide {
+  max-width: min(96vw, 1600px);
+  max-height: 90vh;
+}
+
+@media (max-width: 768px) {
+  .instrument-detail__img {
+    max-width: 85vw;
+    max-height: 55vh;
+  }
+  .back-btn {
+    font-size: 0.65rem;
+    padding: 0.5rem 0.9rem;
   }
 }

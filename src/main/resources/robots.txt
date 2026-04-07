@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://onegg.vercel.app/sitemap.xml
+

@@ -1,0 +1,182 @@
+// ── media.scss – Instagram feed pagina ───────────────────
+$bg:           #0c0818;
+$brand:        #e0306e;
+$font-display: 'Arial Black', 'Arial Bold', Impact, sans-serif;
+$font-ui:      'Arial', Helvetica, sans-serif;
+
+// ── Fixed sidebars (zelfde systeem als .col-left / .col-right) ─
+.media-sidebar {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem 1.5rem;
+    z-index: 10;
+
+    &--left  { left: 0; }
+    &--right { right: 0; }
+}
+
+// ── Scrollable main content ───────────────────────────────
+.media-main {
+    padding: 4rem clamp(80px, 9vw, 130px) 6rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+// ── Header / hero ─────────────────────────────────────────
+.media-header {
+    text-align: center;
+    padding: 2.5rem 0 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.media-title {
+    font-family: $font-display;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 900;
+    color: $brand;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-shadow:
+        0 0 30px rgba($brand, 0.35),
+        0 0 80px rgba(122, 21, 128, 0.2);
+}
+
+// ── Instagram @handle badge ───────────────────────────────
+.media-insta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    border: 1.5px solid rgba($brand, 0.4);
+    border-radius: 999px;
+    padding: 0.45rem 1.1rem;
+    background: rgba($brand, 0.07);
+    transition: background 0.2s ease, border-color 0.2s ease;
+
+    svg {
+        width: 18px;
+        height: 18px;
+        fill: $brand;
+        flex-shrink: 0;
+    }
+
+    a {
+        font-family: $font-ui;
+        font-size: 0.85rem;
+        letter-spacing: 0.12em;
+        color: rgba($brand, 0.75);
+        font-weight: 600;
+    }
+
+    &:hover {
+        background: rgba($brand, 0.14);
+        border-color: $brand;
+
+        a {
+            color: $brand;
+            opacity: 1;
+        }
+    }
+}
+
+// ── Feed section ──────────────────────────────────────────
+.media-feed-section {
+    padding-bottom: 4rem;
+}
+
+// ── Loading dots ──────────────────────────────────────────
+.media-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 5rem 0;
+    transition: opacity 0.4s ease;
+
+    &.is-hidden {
+        opacity: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+        pointer-events: none;
+    }
+}
+
+.media-loader__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $brand;
+    animation: dotPulse 1.2s ease-in-out infinite both;
+
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+}
+
+@keyframes dotPulse {
+    0%, 80%, 100% {
+        transform: scale(0.5);
+        opacity: 0.25;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+// ── Feed wrapper: fade-in zodra Behold geladen is ─────────
+.media-feed-wrap {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+
+    &.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    // Behold rendert in gewone DOM, geen shadow DOM
+    // Verwijder eventuele witte achtergrond
+    & > div {
+        background: transparent !important;
+    }
+}
+
+// ── Mobile (≤ 768px) ──────────────────────────────────────
+@media (max-width: 768px) {
+    // Sidebars verbergen — mobiel layout via het .layout blok in styles.css
+    .media-sidebar {
+        display: none;
+    }
+
+    // Voeg het .layout / .col-left / .col-right blok toe voor mobiel
+    .media-mobile-layout {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .media-main {
+        padding: 4.5rem 1rem 3rem;
+    }
+
+    .media-header {
+        padding: 1.5rem 0 1.5rem;
+    }
+
+    .media-title {
+        font-size: clamp(2.5rem, 14vw, 4rem);
+    }
+
+    .media-insta-badge a {
+        font-size: 0.78rem;
+    }
+}
+

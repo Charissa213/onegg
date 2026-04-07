@@ -1,0 +1,35 @@
+// ── Korg Minilogue – pagina-specifieke stijlen ────────────
+// Variabelen (lokaal gespiegeld van styles.scss)
+$bg:    #0c0818;
+$brand: #e0306e;
+
+// ── Container ─────────────────────────────────────────────
+.instrument-detail--minilogue {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 2rem 4vh;
+}
+
+// ── Afbeelding ────────────────────────────────────────────
+.instrument-detail__img--minilogue {
+    width: min(96vw, 1600px);
+    max-width: none;
+    max-height: none;
+    height: auto;
+    filter: drop-shadow(0 0 40px rgba($brand, 0.55)) drop-shadow(0 0 100px rgba(122, 21, 128, 0.35));
+}
+
+// ── Mobiel (≤ 768px) ──────────────────────────────────────
+@media (max-width: 768px) {
+    .instrument-detail--minilogue {
+
+    }
+
+    .instrument-detail__img--minilogue {
+
+    }
+}
+

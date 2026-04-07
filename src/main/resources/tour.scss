@@ -1,0 +1,170 @@
+// ── tour.scss – Tour dates pagina ────────────────────────
+$bg:           #0c0818;
+$brand:        #e0306e;
+$font-display: 'Arial Black', 'Arial Bold', Impact, sans-serif;
+$font-ui:      'Arial', Helvetica, sans-serif;
+
+// ── Tour content container ────────────────────────────────
+.tour-content {
+    width: clamp(280px, 55vw, 740px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 75vh;
+    overflow-y: auto;
+    padding: 0 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba($brand, 0.25) transparent;
+
+    &::-webkit-scrollbar       { width: 2px; }
+    &::-webkit-scrollbar-thumb { background: rgba($brand, 0.25); border-radius: 2px; }
+}
+
+// page-title al gedefinieerd in styles.scss, alleen extra spacing hier
+.tour-content .page-title {
+    margin-bottom: clamp(1.2rem, 3vh, 2.5rem);
+    flex-shrink: 0;
+}
+
+// ── Één tour date rij ─────────────────────────────────────
+.tour-date {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 8rem 1fr auto;
+    gap: 0 1.5rem;
+    align-items: center;
+    padding: 1.1rem 0.6rem;
+    border-bottom: 1px solid rgba($brand, 0.18);
+    transition: background 0.2s ease;
+
+    &:first-of-type { border-top: 1px solid rgba($brand, 0.18); }
+    &:hover         { background: rgba($brand, 0.05); }
+}
+
+.tour-date__date {
+    font-family: $font-display;
+    font-size: clamp(0.6rem, 1vw, 0.82rem);
+    font-weight: 900;
+    color: $brand;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.tour-date__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.tour-date__venue {
+    font-family: $font-display;
+    font-size: clamp(0.65rem, 1.1vw, 0.92rem);
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.tour-date__location {
+    font-family: $font-ui;
+    font-size: clamp(0.55rem, 0.85vw, 0.72rem);
+    color: rgba($brand, 0.55);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+// ── Ticket knop ───────────────────────────────────────────
+.tour-date__ticket {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid $brand;
+    border-radius: 4px;
+    padding: 0.35rem 0.85rem;
+    font-family: $font-display;
+    font-size: clamp(0.5rem, 0.75vw, 0.68rem);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $brand;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        background: $brand;
+        color: #fff;
+        opacity: 1;
+    }
+
+    // Geen ticket link beschikbaar
+    &--soon {
+        border-color: rgba($brand, 0.25);
+        color: rgba($brand, 0.35);
+        pointer-events: none;
+        cursor: default;
+
+        &:hover { background: transparent; color: rgba($brand, 0.35); }
+    }
+}
+
+// ── Loading dots ──────────────────────────────────────────
+.tour-loader {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    padding: 3rem 0;
+
+    &.is-hidden { display: none; }
+}
+
+.tour-loader__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $brand;
+    animation: tourPulse 1.2s ease-in-out infinite both;
+
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+}
+
+@keyframes tourPulse {
+    0%, 80%, 100% { transform: scale(0.5); opacity: 0.25; }
+    40%           { transform: scale(1);   opacity: 1; }
+}
+
+// ── Geen shows ────────────────────────────────────────────
+.tour-empty {
+    font-family: $font-ui;
+    font-size: clamp(0.7rem, 1.3vw, 1rem);
+    color: rgba($brand, 0.55);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    padding: 3rem 0;
+    display: none;
+
+    &.is-visible { display: block; }
+}
+
+// ── Mobile (≤ 768px) ──────────────────────────────────────
+@media (max-width: 768px) {
+    .tour-content {
+        max-height: calc(100vh - 11rem);
+        width: 100%;
+        padding: 0 0.2rem;
+    }
+
+    // Op mobiel: stapel de kolommen
+    .tour-date {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+        padding: 0.9rem 0.4rem;
+    }
+
+    .tour-date__ticket {
+        margin-top: 0.25rem;
+    }
+}
+

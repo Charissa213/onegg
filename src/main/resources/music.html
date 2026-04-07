@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Onegg – Music</title>
-    <meta name="description" content="Onegg – Music" />
-    <meta property="og:title" content="Onegg – Music" />
-    <meta property="og:description" content="Onegg – Music" />
+    <title>Onegg – Muziek | Luister op Spotify & SoundCloud</title>
+    <meta name="description" content="Luister naar de muziek van Onegg op Spotify en SoundCloud. Ontdek onze tracks, albums en live opnames." />
+    <link rel="canonical" href="https://onegg.vercel.app/music.html" />
+    <meta property="og:title" content="Onegg – Muziek" />
+    <meta property="og:description" content="Luister naar de muziek van Onegg op Spotify en SoundCloud. Ontdek onze tracks, albums en live opnames." />
     <meta property="og:image" content="https://onegg.vercel.app/assets/logos/onegg_black.png" />
     <meta property="og:url" content="https://onegg.vercel.app/music.html" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="music.album" />
+    <meta property="og:site_name" content="Onegg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Onegg – Muziek" />
+    <meta name="twitter:description" content="Luister naar de muziek van Onegg op Spotify en SoundCloud." />
+    <meta name="twitter:image" content="https://onegg.vercel.app/assets/logos/onegg_black.png" />
     <link rel="icon" type="image/png" href="assets/logos/onegg_wit.png" />
     <link rel="stylesheet" href="styles.css" />
 </head>
@@ -20,6 +26,10 @@
 </div>
 
 <div class="layout">
+
+    <div class="page-title-bar">
+        <h1 class="page-title">Music</h1>
+    </div>
 
     <div class="col-left">
         <ul class="social-icons" aria-label="Social media">
@@ -45,9 +55,9 @@
         <div class="music-content">
             <h1 class="page-title">Music</h1>
             <div class="music-instruments">
-                <img class="instrument-img" src="assets/images/korg-kronos-korg.png" alt="Korg Kronos" />
-                <img class="instrument-img" src="assets/images/korg-minilogue.png" alt="Korg Minilogue" />
-                <img class="instrument-img" src="assets/images/roland-tr-808.png" alt="Roland TR-808" />
+                <a href="korg-kronos.html"><img class="instrument-img" src="assets/images/korg-kronos-korg.png" alt="Korg Kronos" /></a>
+                <a href="korg-minilogue.html"><img class="instrument-img" src="assets/images/korg-minilogue.png" alt="Korg Minilogue" /></a>
+                <a href="roland-tr-808.html"><img class="instrument-img instrument-img--808" src="assets/images/roland-tr-808.png" alt="Roland TR-808" /></a>
             </div>
             <div class="soundcloud-wrap">
                 <iframe allow="autoplay"
