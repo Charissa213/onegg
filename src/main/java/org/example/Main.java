@@ -27,12 +27,28 @@ public class Main {
                 path = "/index.html";
             }
 
+            // Clean URL support: /tour → /tour.html (zoals Vercel cleanUrls: true)
+            if (!path.contains(".")) {
+                path = path + ".html";
+            }
+
             InputStream is = Main.class.getResourceAsStream(path);
             if (is == null) {
-                String response = "404 Not Found";
-                exchange.sendResponseHeaders(404, response.getBytes().length);
+                InputStream page404 = Main.class.getResourceAsStream("/404.html");
+                if (page404 == null) {
+                    String response = "404 Not Found";
+                    exchange.sendResponseHeaders(404, response.getBytes().length);
+                    try (OutputStream os = exchange.getResponseBody()) {
+                        os.write(response.getBytes());
+                    }
+                    return;
+                }
+                byte[] bytes404 = page404.readAllBytes();
+                exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+                exchange.getResponseHeaders().set("Cache-Control", "no-cache, no-store, must-revalidate");
+                exchange.sendResponseHeaders(404, bytes404.length);
                 try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response.getBytes());
+                    os.write(bytes404);
                 }
                 return;
             }
